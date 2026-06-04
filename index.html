@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RESET — A New Path. A Stronger You.</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #EDE8E0;
+    --cream-dark: #DDD8CE;
+    --cream-light: #F5F2EE;
+    --charcoal: #2A2825;
+    --charcoal-mid: #3D3A36;
+    --gold: #C9A96E;
+    --gold-light: #E8D5B0;
+    --sand: #B8A898;
+    --text-muted: #7A7570;
+    --white: #FDFCFA;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--cream); color:var(--charcoal); font-family:'Outfit',sans-serif; font-weight:300; overflow-x:hidden; }
+
+  /* PAGE SYSTEM */
+  .page { display:none; }
+  .page.active { display:block; }
+
+  /* EMERGENCY BAR */
+  .emergency-bar {
+    background:var(--charcoal); color:var(--cream-light);
+    text-align:center; padding:10px 20px; font-size:12px;
+    letter-spacing:1.5px; text-transform:uppercase;
+    position:sticky; top:0; z-index:1000;
+    display:flex; justify-content:center; align-items:center; gap:20px;
+  }
+  .emergency-bar a { color:var(--gold); text-decoration:none; font-weight:600; border:1px solid var(--gold); padding:3px 10px; border-radius:2px; transition:all 0.2s; }
+  .emergency-bar a:hover { background:var(--gold); color:var(--charcoal); }
+
+  /* NAV */
+  nav {
+    display:flex; justify-content:space-between; align-items:center;
+    padding:18px 60px; background:var(--cream-light);
+    border-bottom:1px solid var(--cream-dark);
+    position:sticky; top:40px; z-index:999;
+  }
+  .nav-logo { font-family:'Outfit',sans-serif; font-weight:600; font-size:22px; letter-spacing:6px; color:var(--charcoal); text-transform:uppercase; text-decoration:none; cursor:pointer; }
+  .nav-logo span { color:var(--gold); }
+  .nav-links { display:flex; gap:24px; align-items:center; }
+  .nav-links a { text-decoration:none; color:var(--charcoal-mid); font-size:13px; letter-spacing:1.5px; text-transform:uppercase; font-weight:400; transition:color 0.2s; cursor:pointer; }
+  .nav-links a:hover, .nav-links a.active-tab { color:var(--gold); }
+  .btn-nav { background:var(--charcoal); color:var(--cream-light)!important; padding:9px 20px; border-radius:2px; font-weight:500!important; }
+  .btn-nav:hover { background:var(--gold)!important; color:var(--charcoal)!important; }
+  .btn-nav-outline { border:1px solid var(--charcoal)!important; color:var(--charcoal)!important; padding:8px 18px; border-radius:2px; font-weight:400!important; }
+  .btn-nav-outline:hover { border-color:var(--gold)!important; color:var(--gold)!important; }
+
+  /* TAB BAR */
+  .tab-bar {
+    display:flex; overflow-x:auto; background:var(--cream);
+    border-bottom:1px solid var(--cream-dark);
+    padding:0 60px; gap:0;
+    scrollbar-width:none;
+  }
+  .tab-bar::-webkit-scrollbar { display:none; }
+  .tab-item {
+    padding:14px 28px; font-size:12px; letter-spacing:2px;
+    text-transform:uppercase; cursor:pointer; white-space:nowrap;
+    border-bottom:2px solid transparent; color:var(--text-muted);
+    transition:all 0.25s; font-weight:400; user-select:none;
+  }
+  .tab-item:hover { color:var(--charcoal); }
+  .tab-item.active { color:var(--charcoal); border-bottom-color:var(--gold); font-weight:500; }
+
+  /* HERO */
+  .hero { min-height:90vh; display:flex; align-items:center; justify-content:center; text-align:center; padding:80px 40px; position:relative; overflow:hidden; }
+  .hero-bg { position:absolute; inset:0; background:radial-gradient(ellipse 60% 60% at 30% 40%, rgba(201,169,110,0.15) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 70% 60%, rgba(184,168,152,0.1) 0%, transparent 60%); }
+  .hero-orb { position:absolute; width:380px; height:380px; background:radial-gradient(circle at 40% 35%, rgba(232,213,176,0.8), rgba(201,169,110,0.3) 50%, transparent 75%); border-radius:50%; left:5%; top:10%; filter:blur(2px); animation:float 6s ease-in-out infinite; }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-20px)} }
+  .hero-content { position:relative; z-index:2; max-width:900px; }
+  .hero-eyebrow { font-size:11px; letter-spacing:4px; text-transform:uppercase; color:var(--gold); margin-bottom:24px; font-weight:500; }
+  .hero-title { font-family:'Outfit',sans-serif; font-weight:200; font-size:clamp(72px,12vw,160px); letter-spacing:12px; line-height:0.9; color:var(--charcoal); margin-bottom:32px; text-transform:uppercase; }
+  .hero-sub { font-size:15px; letter-spacing:3px; text-transform:uppercase; color:var(--text-muted); }
+  .hero-divider { width:40px; height:1px; background:var(--gold); margin:24px auto; }
+  .hero-desc { font-size:16px; color:var(--charcoal-mid); max-width:500px; margin:0 auto 40px; line-height:1.8; font-weight:300; }
+  .hero-cta { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+  .btn-primary { background:var(--charcoal); color:var(--cream-light); padding:16px 36px; border:none; border-radius:2px; font-family:'Outfit',sans-serif; font-size:12px; letter-spacing:2px; text-transform:uppercase; cursor:pointer; text-decoration:none; transition:all 0.3s; font-weight:500; display:inline-block; }
+  .btn-primary:hover { background:var(--gold); color:var(--charcoal); transform:translateY(-2px); }
+  .btn-outline { background:transparent; color:var(--charcoal); padding:16px 36px; border:1px solid var(--charcoal); border-radius:2px; font-family:'Outfit',sans-serif; font-size:12px; letter-spacing:2px; text-transform:uppercase; cursor:pointer; text-decoration:none; transition:all 0.3s; font-weight:400; display:inline-block; }
+  .btn-outline:hover { border-color:var(--gold); color:var(--gold); transform:translateY(-2px); }
+
+  /* PILLARS */
+  .pillars { display:flex; justify-content:center; padding:60px; border-top:1px solid var(--cream-dark); border-bottom:1px solid var(--cream-dark); background:var(--cream-light); }
+  .pillar { display:flex; flex-direction:column; align-items:center; gap:14px; padding:0 50px; border-right:1px solid var(--cream-dark); cursor:pointer; transition:transform 0.3s; }
+  .pillar:last-child { border-right:none; }
+  .pillar:hover { transform:translateY(-4px); }
+  .pillar-icon { font-size:28px; }
+  .pillar-label { font-size:10px; letter-spacing:2.5px; text-transform:uppercase; color:var(--text-muted); text-align:center; font-weight:500; line-height:1.6; }
+
+  /* SECTIONS */
+  section { padding:100px 60px; }
+  .section-tag { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--gold); font-weight:600; margin-bottom:16px; }
+  .section-title { font-family:'Cormorant Garamond',serif; font-size:clamp(36px,5vw,60px); font-weight:400; line-height:1.15; color:var(--charcoal); margin-bottom:20px; }
+  .section-body { font-size:15px; line-height:1.9; color:var(--text-muted); max-width:520px; font-weight:300; }
+
+  /* FEATURES */
+  .features-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:2px; margin-top:60px; }
+  .feature-card { background:var(--cream-light); padding:44px 36px; border:1px solid var(--cream-dark); transition:all 0.3s; cursor:pointer; position:relative; overflow:hidden; }
+  .feature-card::before { content:''; position:absolute; bottom:0; left:0; height:2px; width:0; background:var(--gold); transition:width 0.4s; }
+  .feature-card:hover::before { width:100%; }
+  .feature-card:hover { transform:translateY(-4px); box-shadow:0 20px 60px rgba(42,40,37,0.08); }
+  .feature-icon { font-size:32px; margin-bottom:20px; }
+  .feature-title { font-size:13px; font-weight:500; letter-spacing:1px; margin-bottom:12px; color:var(--charcoal); text-transform:uppercase; }
+  .feature-desc { font-size:14px; color:var(--text-muted); line-height:1.8; }
+  .badge { display:inline-block; font-size:9px; letter-spacing:1.5px; text-transform:uppercase; padding:3px 8px; border-radius:2px; margin-top:12px; font-weight:600; }
+  .badge-free { background:rgba(201,169,110,0.15); color:var(--gold); }
+  .badge-premium { background:var(--charcoal); color:var(--cream-light); }
+
+  /* PRICING */
+  #pricing { background:var(--charcoal); color:var(--cream-light); }
+  #pricing .section-tag { color:var(--gold); }
+  #pricing .section-title { color:var(--cream-light); }
+  #pricing .section-body { color:var(--sand); }
+  .pricing-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:2px; margin-top:60px; max-width:900px; }
+  .price-card { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); padding:44px 36px; transition:all 0.3s; cursor:pointer; }
+  .price-card:hover { background:rgba(255,255,255,0.07); transform:translateY(-4px); }
+  .price-card.featured { background:var(--gold); color:var(--charcoal); border-color:var(--gold); }
+  .price-tag { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--sand); margin-bottom:16px; }
+  .price-card.featured .price-tag { color:var(--charcoal-mid); }
+  .price-amount { font-family:'Cormorant Garamond',serif; font-size:56px; font-weight:400; line-height:1; margin-bottom:8px; }
+  .price-period { font-size:12px; color:var(--sand); letter-spacing:1px; margin-bottom:24px; }
+  .price-card.featured .price-period { color:var(--charcoal-mid); }
+  .price-divider { height:1px; background:rgba(255,255,255,0.1); margin:24px 0; }
+  .price-card.featured .price-divider { background:rgba(42,40,37,0.2); }
+  .price-features { list-style:none; display:flex; flex-direction:column; gap:12px; margin-bottom:32px; }
+  .price-features li { font-size:13px; color:var(--sand); display:flex; align-items:center; gap:10px; }
+  .price-card.featured .price-features li { color:var(--charcoal-mid); }
+  .price-features li::before { content:'—'; color:var(--gold); font-size:10px; }
+  .price-card.featured .price-features li::before { color:var(--charcoal); }
+  .price-desc { font-size:13px; line-height:1.7; margin-bottom:24px; color:var(--sand); }
+  .price-card.featured .price-desc { color:var(--charcoal-mid); }
+  .btn-price { width:100%; padding:14px; border:1px solid rgba(255,255,255,0.2); background:transparent; color:var(--cream-light); font-family:'Outfit',sans-serif; font-size:11px; letter-spacing:2px; text-transform:uppercase; cursor:pointer; border-radius:2px; transition:all 0.3s; font-weight:500; }
+  .btn-price:hover { background:var(--gold); border-color:var(--gold); color:var(--charcoal); }
+  .price-card.featured .btn-price { background:var(--charcoal); color:var(--cream-light); border-color:var(--charcoal); }
+
+  /* COMMUNITY */
+  .community-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; margin-top:60px; }
+  .community-card { padding:48px; background:var(--cream); border:1px solid var(--cream-dark); transition:all 0.3s; cursor:pointer; }
+  .community-card:hover { transform:translateY(-4px); box-shadow:0 20px 60px rgba(42,40,37,0.06); }
+  .comm-icon { font-size:36px; margin-bottom:20px; }
+  .comm-title { font-size:13px; letter-spacing:2px; text-transform:uppercase; font-weight:600; margin-bottom:12px; }
+  .comm-desc { font-size:14px; color:var(--text-muted); line-height:1.8; margin-bottom:24px; }
+  .comm-meta { display:flex; gap:16px; align-items:center; }
+  .comm-dot { width:6px; height:6px; border-radius:50%; background:var(--gold); }
+  .comm-stat { font-size:11px; letter-spacing:1px; color:var(--text-muted); text-transform:uppercase; }
+
+  /* DONATE */
+  #donate { text-align:center; }
+  #donate .section-body { margin:0 auto; }
+  .donate-amounts { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:40px; }
+  .donate-btn { padding:16px 28px; border:1px solid var(--cream-dark); background:var(--cream-light); font-family:'Outfit',sans-serif; font-size:14px; cursor:pointer; border-radius:2px; transition:all 0.3s; color:var(--charcoal); }
+  .donate-btn:hover, .donate-btn.active { background:var(--charcoal); color:var(--cream-light); border-color:var(--charcoal); transform:translateY(-2px); }
+  .donate-custom { padding:16px 20px; border:1px solid var(--cream-dark); background:var(--cream-light); font-family:'Outfit',sans-serif; font-size:14px; border-radius:2px; color:var(--charcoal); outline:none; width:120px; }
+  .donate-custom:focus { border-color:var(--gold); }
+  .heart-counter { margin-top:20px; font-size:13px; color:var(--text-muted); letter-spacing:1px; }
+
+  /* AD */
+  .ad-banner { background:var(--cream-dark); border:1px dashed var(--sand); padding:16px 24px; text-align:center; font-size:11px; color:var(--text-muted); letter-spacing:1px; position:relative; margin:0 60px; border-radius:2px; }
+  .ad-label { font-size:9px; text-transform:uppercase; letter-spacing:2px; color:var(--sand); margin-bottom:4px; }
+  .ad-close-btn { position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:var(--text-muted); font-size:14px; }
+
+  /* INSTAGRAM */
+  #social { background:var(--charcoal); padding:80px 60px; text-align:center; }
+  #social .section-tag { color:var(--gold); }
+  #social .section-title { color:var(--cream-light); margin-bottom:12px; }
+  .insta-link { display:inline-flex; align-items:center; gap:12px; text-decoration:none; color:var(--cream-light); font-size:14px; letter-spacing:2px; text-transform:uppercase; border:1px solid rgba(255,255,255,0.15); padding:16px 36px; border-radius:2px; transition:all 0.3s; margin-top:32px; }
+  .insta-link:hover { border-color:var(--gold); color:var(--gold); }
+
+  /* FOOTER */
+  footer { background:var(--charcoal); border-top:1px solid rgba(255,255,255,0.06); padding:60px 60px 40px; color:var(--sand); }
+  .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:40px; margin-bottom:40px; }
+  .footer-brand p { font-size:12px; color:var(--sand); line-height:1.8; max-width:220px; margin-top:12px; }
+  .footer-col h4 { font-size:10px; letter-spacing:2.5px; text-transform:uppercase; color:var(--cream-light); margin-bottom:16px; font-weight:500; }
+  .footer-col a { display:block; font-size:12px; color:var(--sand); text-decoration:none; margin-bottom:10px; transition:color 0.2s; cursor:pointer; }
+  .footer-col a:hover { color:var(--gold); }
+  .footer-bottom { border-top:1px solid rgba(255,255,255,0.06); padding-top:24px; display:flex; justify-content:space-between; align-items:center; font-size:11px; color:var(--text-muted); }
+  .school-badge { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-muted); border:1px solid rgba(255,255,255,0.08); padding:4px 12px; border-radius:2px; }
+
+  /* LEGAL PAGES */
+  .legal-page { padding:80px 60px; max-width:860px; margin:0 auto; }
+  .legal-page h1 { font-family:'Cormorant Garamond',serif; font-size:52px; font-weight:400; margin-bottom:12px; }
+  .legal-page .legal-date { font-size:11px; color:var(--text-muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:48px; display:block; }
+  .legal-page h2 { font-size:13px; letter-spacing:2px; text-transform:uppercase; font-weight:600; color:var(--charcoal); margin:40px 0 14px; }
+  .legal-page p { font-size:14px; color:var(--text-muted); line-height:1.9; margin-bottom:16px; }
+  .legal-page ul { padding-left:24px; margin-bottom:16px; }
+  .legal-page ul li { font-size:14px; color:var(--text-muted); line-height:1.9; margin-bottom:6px; }
+  .legal-highlight { background:var(--cream-light); border-left:3px solid var(--gold); padding:20px 24px; margin:24px 0; border-radius:0 2px 2px 0; }
+  .legal-highlight p { margin:0; color:var(--charcoal-mid); }
+
+  /* MODAL */
+  .modal-overlay { position:fixed; inset:0; background:rgba(42,40,37,0.7); backdrop-filter:blur(8px); z-index:2000; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.3s; }
+  .modal-overlay.active { opacity:1; pointer-events:all; }
+  .modal { background:var(--cream-light); max-width:460px; width:90%; padding:52px; border-radius:2px; transform:translateY(20px); transition:transform 0.3s; position:relative; max-height:90vh; overflow-y:auto; }
+  .modal-overlay.active .modal { transform:translateY(0); }
+  .modal-close { position:absolute; top:20px; right:24px; background:none; border:none; font-size:20px; cursor:pointer; color:var(--text-muted); }
+  .modal h3 { font-family:'Cormorant Garamond',serif; font-size:32px; font-weight:400; margin-bottom:8px; }
+  .modal p { font-size:13px; color:var(--text-muted); margin-bottom:28px; line-height:1.7; }
+  .form-group { margin-bottom:18px; }
+  .form-group label { display:block; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px; font-weight:500; }
+  .form-group input, .form-group select { width:100%; padding:13px 16px; border:1px solid var(--cream-dark); background:var(--cream); font-family:'Outfit',sans-serif; font-size:14px; border-radius:2px; color:var(--charcoal); outline:none; transition:border-color 0.2s; }
+  .form-group input:focus, .form-group select:focus { border-color:var(--gold); }
+  .modal-footer-text { font-size:11px; color:var(--text-muted); margin-top:16px; text-align:center; }
+  .modal-footer-text a { color:var(--gold); text-decoration:none; cursor:pointer; }
+  .checkbox-row { display:flex; align-items:flex-start; gap:12px; margin:16px 0; }
+  .checkbox-row input[type=checkbox] { margin-top:3px; accent-color:var(--gold); }
+  .checkbox-row label { font-size:12px; color:var(--text-muted); line-height:1.6; cursor:pointer; }
+  .checkbox-row a { color:var(--gold); text-decoration:none; cursor:pointer; }
+
+  /* TOAST */
+  .toast { position:fixed; bottom:30px; right:30px; background:var(--charcoal); color:var(--cream-light); padding:16px 24px; border-radius:2px; font-size:13px; z-index:3000; transform:translateY(20px); opacity:0; transition:all 0.3s; border-left:3px solid var(--gold); max-width:300px; }
+  .toast.show { transform:translateY(0); opacity:1; }
+
+  /* FADE IN */
+  .fade-in { opacity:0; transform:translateY(30px); transition:all 0.7s ease; }
+  .fade-in.visible { opacity:1; transform:translateY(0); }
+
+  @media(max-width:768px) {
+    nav { padding:16px 20px; }
+    .nav-links { display:none; }
+    .nav-mobile-btns { display:flex; gap:8px; }
+    section { padding:60px 20px; }
+    .pillars { flex-direction:column; gap:24px; padding:40px 20px; }
+    .pillar { border-right:none; border-bottom:1px solid var(--cream-dark); padding:0 0 24px; }
+    .pillar:last-child { border-bottom:none; }
+    .community-grid { grid-template-columns:1fr; }
+    .footer-grid { grid-template-columns:1fr 1fr; }
+    .ad-banner { margin:0 20px; }
+    .tab-bar { padding:0 20px; }
+    .legal-page { padding:40px 20px; }
+    .legal-page h1 { font-size:36px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- EMERGENCY BAR -->
+<div class="emergency-bar">
+  <span>🆘 In crisis? Help is always available.</span>
+  <a href="tel:112">📞 Call 112</a>
+  <a href="tel:08001110111">Telefonseelsorge</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo" onclick="goTo('home')">RE<span>S</span>ET</span>
+  <div class="nav-links">
+    <a onclick="goToTab('features')" id="nav-features">Features</a>
+    <a onclick="goToTab('community')" id="nav-community">Community</a>
+    <a onclick="goToTab('pricing')" id="nav-pricing">Plans</a>
+    <a onclick="goToTab('donate')" id="nav-donate">Donate</a>
+    <a onclick="openModal('login')" class="btn-nav-outline">Log In</a>
+    <a onclick="openModal('signup')" class="btn-nav">Get Started</a>
+  </div>
+</nav>
+
+<!-- TAB BAR -->
+<div class="tab-bar" id="tabBar">
+  <div class="tab-item active" data-tab="home" onclick="goTo('home')">🏠 Home</div>
+  <div class="tab-item" data-tab="features" onclick="goTo('features')">✨ Features</div>
+  <div class="tab-item" data-tab="community" onclick="goTo('community')">👥 Community</div>
+  <div class="tab-item" data-tab="pricing" onclick="goTo('pricing')">💎 Plans</div>
+  <div class="tab-item" data-tab="donate" onclick="goTo('donate')">❤️ Donate</div>
+  <div class="tab-item" data-tab="tos" onclick="goTo('tos')">📄 Terms of Service</div>
+  <div class="tab-item" data-tab="privacy" onclick="goTo('privacy')">🔒 Privacy Policy</div>
+</div>
+
+<!-- ===== PAGE: HOME ===== -->
+<div class="page active" id="page-home">
+
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-orb"></div>
+    <div class="hero-content fade-in">
+      <p class="hero-eyebrow">by Return — A Student Project</p>
+      <h1 class="hero-title">RESET</h1>
+      <p class="hero-sub">A New Path. A Stronger You.</p>
+      <div class="hero-divider"></div>
+      <p class="hero-desc">A free, supportive community for young people aged 18–25 who want to break free from alcohol — one honest step at a time.</p>
+      <div class="hero-cta">
+        <button class="btn-primary" onclick="openModal('signup')">Start for Free</button>
+        <button class="btn-outline" onclick="goTo('features')">Explore Features</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="pillars">
+    <div class="pillar fade-in" onclick="openModal('signup')">
+      <div class="pillar-icon">🛡</div>
+      <div class="pillar-label">Trustworthy<br>& Reliable</div>
+    </div>
+    <div class="pillar fade-in" onclick="openModal('signup')">
+      <div class="pillar-icon">🌱</div>
+      <div class="pillar-label">Simple</div>
+    </div>
+    <div class="pillar fade-in" onclick="openModal('signup')">
+      <div class="pillar-icon">💬</div>
+      <div class="pillar-label">Available</div>
+    </div>
+  </div>
+
+  <div style="padding:30px 0;">
+    <div class="ad-banner" id="adBanner">
+      <div class="ad-label">Advertisement</div>
+      <p style="font-size:13px;color:var(--charcoal);">🧘 Headspace: Build mental strength. Free for students. <a onclick="goTo('pricing')" style="color:var(--gold);cursor:pointer;">Go Premium to remove ads →</a></p>
+      <button class="ad-close-btn" onclick="document.getElementById('adBanner').style.display='none'">✕</button>
+    </div>
+  </div>
+
+  <section id="social" style="background:var(--charcoal);padding:80px 60px;text-align:center;">
+    <p class="section-tag fade-in">Follow the Journey</p>
+    <h2 class="section-title fade-in" style="margin:0 auto;color:var(--cream-light);">We share stories<br>every week.</h2>
+    <br>
+    <a href="https://instagram.com/reset.path" target="_blank" class="insta-link fade-in">
+      <span>📸</span> @reset.path on Instagram
+    </a>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="nav-logo" onclick="goTo('home')" style="color:var(--cream-light);cursor:pointer;font-size:18px;">RE<span style="color:var(--gold)">S</span>ET</span>
+        <p>A free recovery platform for young adults aged 18–25. Built with care as a student initiative by Team Return.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <a onclick="goTo('features')">Features</a>
+        <a onclick="openModal('signup')">Create Account</a>
+        <a onclick="goTo('pricing')">Pricing</a>
+        <a onclick="goTo('donate')">Donate</a>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <a onclick="openModal('counseling')">Counseling</a>
+        <a onclick="goTo('community')">Community</a>
+        <a onclick="showToast('Help Center coming soon!')">Help Center</a>
+        <a href="tel:112">📞 Emergency: 112</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="https://instagram.com/reset.path" target="_blank">Instagram</a>
+        <a onclick="goTo('tos')">Terms of Service</a>
+        <a onclick="goTo('privacy')">Privacy Policy</a>
+        <a onclick="showToast('Imprint coming soon!')">Imprint</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Return — RESET. All rights reserved.</span>
+      <span class="school-badge">🎓 Student Project</span>
+    </div>
+  </footer>
+</div>
+
+<!-- ===== PAGE: FEATURES ===== -->
+<div class="page" id="page-features">
+  <section style="background:var(--cream);">
+    <p class="section-tag fade-in">What We Offer</p>
+    <h2 class="section-title fade-in">Everything you need,<br>nothing you don't.</h2>
+    <p class="section-body fade-in">RESET gives you the tools to reclaim your life — professional guidance, real community, and a clear path forward. Always free at its core.</p>
+    <div class="features-grid">
+      <div class="feature-card fade-in" onclick="openModal('signup')">
+        <div class="feature-icon">🎓</div>
+        <div class="feature-title">Free Account Access</div>
+        <div class="feature-desc">Create your account in minutes. Track your sobriety journey, set goals, and access core community features completely free.</div>
+        <span class="badge badge-free">Free Forever</span>
+      </div>
+      <div class="feature-card fade-in" onclick="openModal('counseling')">
+        <div class="feature-icon">🧠</div>
+        <div class="feature-title">Psychological Counseling</div>
+        <div class="feature-desc">Chat with trained psychology students and volunteer counselors. Anonymous, non-judgmental, and available when you need it most.</div>
+        <span class="badge badge-free">Free Access</span>
+      </div>
+      <div class="feature-card fade-in" onclick="showToast('Group sessions open every week — join anytime!')">
+        <div class="feature-icon">👥</div>
+        <div class="feature-title">Group Meetings</div>
+        <div class="feature-desc">Join scheduled small-group sessions facilitated by peers. Share your story or simply listen — every seat matters.</div>
+        <span class="badge badge-free">Free to Join</span>
+      </div>
+      <div class="feature-card fade-in" onclick="openModal('prevention')">
+        <div class="feature-icon">🛤</div>
+        <div class="feature-title">Prevention Course</div>
+        <div class="feature-desc">A structured 6-week program to understand your relationship with alcohol and build lasting habits. Self-paced, evidence-informed.</div>
+        <span class="badge badge-premium">€20 One-Time</span>
+      </div>
+      <div class="feature-card fade-in" onclick="openModal('signup')">
+        <div class="feature-icon">💬</div>
+        <div class="feature-title">Community Chat</div>
+        <div class="feature-desc">Public channels for open conversation and private rooms for closer support circles. Stay connected 24/7.</div>
+        <span class="badge badge-free">Free Access</span>
+      </div>
+      <div class="feature-card fade-in" onclick="openModal('premium')">
+        <div class="feature-icon">⭐</div>
+        <div class="feature-title">Premium — Ad-Free</div>
+        <div class="feature-desc">Support RESET and enjoy an uninterrupted experience. No ads, early access to new features, and a badge for your profile.</div>
+        <span class="badge badge-premium">€4.99 / Month</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===== PAGE: COMMUNITY ===== -->
+<div class="page" id="page-community">
+  <section style="background:var(--cream-light);">
+    <p class="section-tag fade-in">Community</p>
+    <h2 class="section-title fade-in">You're never<br>walking alone.</h2>
+    <p class="section-body fade-in">RESET is built around peer connection. Real people, real stories, real progress.</p>
+    <div class="community-grid">
+      <div class="community-card fade-in" onclick="openModal('signup')">
+        <div class="comm-icon">🌐</div>
+        <div class="comm-title">Public Channels</div>
+        <div class="comm-desc">Open discussions on stress triggers, sober nights out, morning routines, and more.</div>
+        <div class="comm-meta"><div class="comm-dot"></div><span class="comm-stat">Active Daily</span></div>
+      </div>
+      <div class="community-card fade-in" onclick="openModal('signup')">
+        <div class="comm-icon">🔒</div>
+        <div class="comm-title">Private Groups</div>
+        <div class="comm-desc">Form small, trusted circles with people at the same stage of their journey. What's shared here, stays here.</div>
+        <div class="comm-meta"><div class="comm-dot"></div><span class="comm-stat">Invite Only</span></div>
+      </div>
+      <div class="community-card fade-in" onclick="showToast('Next group meeting: Friday 7PM — join via your dashboard!')">
+        <div class="comm-icon">📅</div>
+        <div class="comm-title">Weekly Meetings</div>
+        <div class="comm-desc">Structured group sessions every week. Drop in, listen, share — no pressure, no judgment.</div>
+        <div class="comm-meta"><div class="comm-dot"></div><span class="comm-stat">Every Friday</span></div>
+      </div>
+      <div class="community-card fade-in" onclick="openModal('counseling')">
+        <div class="comm-icon">🤝</div>
+        <div class="comm-title">1-on-1 Counseling</div>
+        <div class="comm-desc">Book a private session with one of our volunteer psychology students. Confidential, compassionate, and completely free.</div>
+        <div class="comm-meta"><div class="comm-dot"></div><span class="comm-stat">Book Anytime</span></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===== PAGE: PRICING ===== -->
+<div class="page" id="page-pricing">
+  <section id="pricing">
+    <p class="section-tag fade-in">Pricing</p>
+    <h2 class="section-title fade-in">Choose your path.</h2>
+    <p class="section-body fade-in">Support is always free. Invest in your deeper recovery when you're ready.</p>
+    <div class="pricing-grid">
+      <div class="price-card fade-in">
+        <p class="price-tag">Free</p>
+        <div class="price-amount">€0</div>
+        <p class="price-period">Always & forever</p>
+        <p class="price-desc">Everything you need to start your journey and connect with a community.</p>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li>Full community access</li>
+          <li>Public & private chat</li>
+          <li>Weekly group meetings</li>
+          <li>Free counseling sessions</li>
+          <li>Sobriety tracker</li>
+        </ul>
+        <button class="btn-price" onclick="openModal('signup')">Create Free Account</button>
+      </div>
+      <div class="price-card featured fade-in">
+        <p class="price-tag">Prevention</p>
+        <div class="price-amount">€20</div>
+        <p class="price-period">One-time payment</p>
+        <p class="price-desc">A structured 6-week course to understand your patterns and build lasting change.</p>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li>6-week guided program</li>
+          <li>Evidence-informed content</li>
+          <li>Worksheets & tools</li>
+          <li>Certificate of completion</li>
+          <li>Lifetime access</li>
+        </ul>
+        <button class="btn-price" onclick="openModal('prevention')">Get the Course</button>
+      </div>
+      <div class="price-card fade-in">
+        <p class="price-tag">Premium</p>
+        <div class="price-amount">€4.99</div>
+        <p class="price-period">Per month</p>
+        <p class="price-desc">Support the mission and enjoy an ad-free, enhanced experience.</p>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li>No advertisements</li>
+          <li>Premium profile badge</li>
+          <li>Early feature access</li>
+          <li>Priority counseling queue</li>
+          <li>Support our project</li>
+        </ul>
+        <button class="btn-price" onclick="openModal('premium')">Go Premium</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===== PAGE: DONATE ===== -->
+<div class="page" id="page-donate">
+  <section id="donate">
+    <p class="section-tag fade-in">Donate</p>
+    <h2 class="section-title fade-in" style="margin:0 auto;">Help someone find<br>their path.</h2>
+    <p class="section-body fade-in" style="margin:16px auto 0;">RESET is a student project — 100% of donations go toward keeping the platform free and funding counseling sessions for those who need them most.</p>
+    <div class="donate-amounts fade-in">
+      <button class="donate-btn" onclick="selectDonate(this,5)">€5</button>
+      <button class="donate-btn" onclick="selectDonate(this,10)">€10</button>
+      <button class="donate-btn" onclick="selectDonate(this,20)">€20</button>
+      <button class="donate-btn" onclick="selectDonate(this,50)">€50</button>
+      <input class="donate-custom" type="number" placeholder="Custom €" id="customDonate" min="1">
+    </div>
+    <div style="margin-top:32px;">
+      <button class="btn-primary" onclick="handleDonate()">Donate with Heart ♥</button>
+    </div>
+    <p class="heart-counter fade-in" id="heartCounter">❤️ 47 people have donated this month</p>
+  </section>
+</div>
+
+<!-- ===== PAGE: TERMS OF SERVICE ===== -->
+<div class="page" id="page-tos">
+  <div class="legal-page">
+    <p class="section-tag">Legal</p>
+    <h1>Terms of Service</h1>
+    <span class="legal-date">Last updated: January 2025 · Student Project by Team Return</span>
+
+    <div class="legal-highlight">
+      <p>⚠️ RESET is a non-commercial student project. These terms are provided for transparency. We are not a licensed medical provider. If you are in crisis, please call <strong>112</strong> immediately.</p>
+    </div>
+
+    <h2>1. Acceptance of Terms</h2>
+    <p>By accessing or using the RESET platform ("Service"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the Service. You must be at least 18 years old to use RESET.</p>
+
+    <h2>2. About RESET</h2>
+    <p>RESET is a student-built project created by Team Return as part of an educational initiative. It is designed to provide peer support and information resources for young adults aged 18–25 who wish to reduce or stop alcohol consumption. RESET is <strong>not a licensed medical or psychological service</strong>.</p>
+
+    <h2>3. User Accounts</h2>
+    <p>When you create an account, you agree to:</p>
+    <ul>
+      <li>Provide accurate and truthful information</li>
+      <li>Keep your password secure and confidential</li>
+      <li>Be responsible for all activity under your account</li>
+      <li>Notify us immediately of any unauthorized access</li>
+    </ul>
+
+    <h2>4. Community Rules</h2>
+    <p>All users must follow our community guidelines:</p>
+    <ul>
+      <li>Treat all members with respect and empathy</li>
+      <li>Do not share harmful or triggering content without a content warning</li>
+      <li>No promotion of alcohol, drugs, or self-harm</li>
+      <li>No harassment, hate speech, or discriminatory content</li>
+      <li>Do not share personal contact information of other users</li>
+      <li>Honor the privacy of private group conversations</li>
+    </ul>
+
+    <h2>5. Counseling Services</h2>
+    <p>Free counseling sessions on RESET are conducted by volunteer psychology students and are <strong>not a substitute</strong> for professional licensed therapy, psychiatry, or emergency services. For emergencies, always call 112.</p>
+
+    <h2>6. Payments</h2>
+    <p>Certain features (Prevention Course at €20, Premium subscription at €4.99/month) require payment. All payments are processed securely. The Prevention Course is non-refundable after course materials have been accessed. Premium subscriptions can be cancelled at any time.</p>
+
+    <h2>7. Donations</h2>
+    <p>Donations are voluntary and non-refundable. 100% of donations are used to maintain the platform and fund free counseling sessions. As a student project, we are not a registered charity.</p>
+
+    <h2>8. Intellectual Property</h2>
+    <p>All content, logos, and materials on RESET are the property of Team Return. You may not reproduce or distribute them without written permission.</p>
+
+    <h2>9. Limitation of Liability</h2>
+    <p>RESET is provided "as is". Team Return makes no warranties, express or implied, regarding the accuracy or reliability of the service. We are not liable for any damages arising from the use of RESET.</p>
+
+    <h2>10. Changes to Terms</h2>
+    <p>We may update these terms at any time. Continued use of the Service after changes constitutes acceptance of the new terms.</p>
+
+    <h2>11. Contact</h2>
+    <p>Questions about these terms? Reach us via Instagram at <a href="https://instagram.com/reset.path" target="_blank" style="color:var(--gold);">@reset.path</a>.</p>
+
+    <div style="margin-top:48px; padding-top:32px; border-top:1px solid var(--cream-dark);">
+      <button class="btn-primary" onclick="goTo('home')">← Back to Home</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: PRIVACY POLICY ===== -->
+<div class="page" id="page-privacy">
+  <div class="legal-page">
+    <p class="section-tag">Legal</p>
+    <h1>Privacy Policy</h1>
+    <span class="legal-date">Last updated: January 2025 · Student Project by Team Return</span>
+
+    <div class="legal-highlight">
+      <p>🔒 Your privacy matters deeply to us. RESET collects minimal data and will never sell your information to third parties. This policy explains what we collect, why, and how you can control it.</p>
+    </div>
+
+    <h2>1. Who We Are</h2>
+    <p>RESET is a student project by Team Return. We built this platform to support young adults in their recovery journey. We take your privacy seriously, especially given the sensitive nature of our community.</p>
+
+    <h2>2. What Data We Collect</h2>
+    <p>We collect only what is necessary to operate the platform:</p>
+    <ul>
+      <li><strong>Account data:</strong> First name, email address, age, password (encrypted)</li>
+      <li><strong>Usage data:</strong> Pages visited, features used, session duration (anonymized)</li>
+      <li><strong>Chat data:</strong> Messages in public and private chats (stored for service functionality)</li>
+      <li><strong>Payment data:</strong> Processed securely via third-party providers — we do not store card details</li>
+      <li><strong>Donation data:</strong> Amount donated (no name stored unless you provide one)</li>
+    </ul>
+
+    <h2>3. How We Use Your Data</h2>
+    <ul>
+      <li>To operate and improve the RESET platform</li>
+      <li>To connect you with counseling sessions and group meetings</li>
+      <li>To send account-related notifications (no marketing emails without consent)</li>
+      <li>To detect and prevent abuse or violations of our community guidelines</li>
+    </ul>
+
+    <h2>4. Data Sharing</h2>
+    <p>We do <strong>not</strong> sell, rent, or share your personal data with third parties for marketing purposes. We may share minimal data with:</p>
+    <ul>
+      <li>Payment processors (for transactions only)</li>
+      <li>Hosting providers (to run the platform)</li>
+      <li>Law enforcement, if legally required</li>
+    </ul>
+
+    <h2>5. Counseling Confidentiality</h2>
+    <p>Content shared in 1-on-1 counseling sessions is treated as confidential. Volunteer counselors are bound by our confidentiality guidelines. In cases of immediate risk to life, counselors may be required to involve emergency services.</p>
+
+    <h2>6. Cookies</h2>
+    <p>We use minimal cookies necessary for the platform to function (e.g. session cookies to keep you logged in). We do not use tracking or advertising cookies.</p>
+
+    <h2>7. Advertisements</h2>
+    <p>RESET displays occasional third-party advertisements to non-Premium users. These ads may use anonymized contextual data but not personal profile data. Premium subscribers see no ads.</p>
+
+    <h2>8. Data Retention</h2>
+    <p>We retain your account data for as long as your account is active. You may request deletion of your account and data at any time by contacting us.</p>
+
+    <h2>9. Your Rights (GDPR)</h2>
+    <p>If you are based in the EU, you have the right to:</p>
+    <ul>
+      <li>Access the personal data we hold about you</li>
+      <li>Request correction of inaccurate data</li>
+      <li>Request deletion of your data ("right to be forgotten")</li>
+      <li>Object to processing of your data</li>
+      <li>Data portability</li>
+    </ul>
+
+    <h2>10. Security</h2>
+    <p>We use industry-standard encryption and security practices to protect your data. However, no system is 100% secure — please use a strong, unique password for your RESET account.</p>
+
+    <h2>11. Minors</h2>
+    <p>RESET is intended for users aged 18 and over. We do not knowingly collect data from anyone under 18.</p>
+
+    <h2>12. Contact & Data Requests</h2>
+    <p>For any privacy-related requests, contact us via Instagram <a href="https://instagram.com/reset.path" target="_blank" style="color:var(--gold);">@reset.path</a>. We aim to respond within 30 days.</p>
+
+    <div style="margin-top:48px; padding-top:32px; border-top:1px solid var(--cream-dark);">
+      <button class="btn-primary" onclick="goTo('home')">← Back to Home</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ===== MODALS ===== -->
+
+<!-- SIGNUP -->
+<div class="modal-overlay" id="modal-signup">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('signup')">✕</button>
+    <h3>Create your account</h3>
+    <p>Join thousands of young people on their path to a better self. It's completely free.</p>
+    <div class="form-group"><label>First Name</label><input type="text" placeholder="Your first name"></div>
+    <div class="form-group"><label>Email</label><input type="email" placeholder="you@email.com"></div>
+    <div class="form-group"><label>Age</label><input type="number" placeholder="18–25" min="18" max="25"></div>
+    <div class="form-group"><label>Password</label><input type="password" placeholder="Choose a password"></div>
+    <div class="checkbox-row">
+      <input type="checkbox" id="tos-check">
+      <label for="tos-check">I have read and agree to the <a onclick="closeModal('signup');goTo('tos')">Terms of Service</a> and <a onclick="closeModal('signup');goTo('privacy')">Privacy Policy</a>.</label>
+    </div>
+    <button class="btn-primary" style="width:100%;margin-top:8px;" onclick="handleSignup()">Join for Free</button>
+    <p class="modal-footer-text">Already have an account? <a onclick="closeModal('signup');openModal('login')">Sign in</a></p>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div class="modal-overlay" id="modal-login">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('login')">✕</button>
+    <h3>Welcome back</h3>
+    <p>Good to see you again. Keep going — every day matters.</p>
+    <div class="form-group"><label>Email</label><input type="email" placeholder="you@email.com" id="loginEmail"></div>
+    <div class="form-group"><label>Password</label><input type="password" placeholder="Your password" id="loginPw"></div>
+    <button class="btn-primary" style="width:100%;margin-top:8px;" onclick="handleLogin()">Sign In</button>
+    <p class="modal-footer-text" style="margin-top:12px;"><a onclick="showToast('Password reset coming soon!')">Forgot password?</a></p>
+    <p class="modal-footer-text">New here? <a onclick="closeModal('login');openModal('signup')">Create free account</a></p>
+    <p class="modal-footer-text" style="margin-top:10px;font-size:10px;">By signing in you agree to our <a onclick="closeModal('login');goTo('tos')">Terms</a> and <a onclick="closeModal('login');goTo('privacy')">Privacy Policy</a>.</p>
+  </div>
+</div>
+
+<!-- COUNSELING -->
+<div class="modal-overlay" id="modal-counseling">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('counseling')">✕</button>
+    <h3>Book a Session</h3>
+    <p>Our volunteer psychology students are here to listen without judgment. Sessions are anonymous and 100% free.</p>
+    <div class="form-group"><label>Preferred Day</label>
+      <select><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option></select>
+    </div>
+    <div class="form-group"><label>Preferred Time</label>
+      <select><option>Morning (9–12)</option><option>Afternoon (12–17)</option><option>Evening (17–21)</option></select>
+    </div>
+    <div class="form-group"><label>Your Email (optional)</label><input type="email" placeholder="For confirmation only"></div>
+    <button class="btn-primary" style="width:100%;margin-top:8px;" onclick="showToast('Session requested! We\'ll confirm via email 💙');closeModal('counseling')">Request Session</button>
+  </div>
+</div>
+
+<!-- PREVENTION -->
+<div class="modal-overlay" id="modal-prevention">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('prevention')">✕</button>
+    <h3>Prevention Course</h3>
+    <p>A 6-week structured program to understand your relationship with alcohol and build habits that stick. One-time payment, lifetime access.</p>
+    <div style="background:var(--cream-dark);padding:20px;border-radius:2px;margin:20px 0;">
+      <div style="font-size:32px;font-family:'Cormorant Garamond',serif;margin-bottom:4px;">€20</div>
+      <div style="font-size:11px;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;">One-time · Lifetime Access</div>
+    </div>
+    <div class="form-group"><label>Email</label><input type="email" placeholder="you@email.com"></div>
+    <button class="btn-primary" style="width:100%;margin-top:8px;" onclick="showToast('Course enrolled! Check your email 📚');closeModal('prevention')">Enroll for €20</button>
+    <p class="modal-footer-text">Questions? <a href="https://instagram.com/reset.path" target="_blank">Contact us</a></p>
+  </div>
+</div>
+
+<!-- PREMIUM -->
+<div class="modal-overlay" id="modal-premium">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('premium')">✕</button>
+    <h3>Go Premium</h3>
+    <p>Support RESET and unlock an ad-free experience. Every subscription directly funds free counseling sessions for others.</p>
+    <div style="background:var(--charcoal);color:var(--cream-light);padding:20px;border-radius:2px;margin:20px 0;">
+      <div style="font-size:32px;font-family:'Cormorant Garamond',serif;margin-bottom:4px;">€4.99</div>
+      <div style="font-size:11px;color:var(--sand);letter-spacing:1px;text-transform:uppercase;">Per month · Cancel anytime</div>
+    </div>
+    <div class="form-group"><label>Email</label><input type="email" placeholder="you@email.com"></div>
+    <button class="btn-primary" style="width:100%;margin-top:8px;" onclick="showToast('Premium activated! Thank you ⭐');closeModal('premium')">Start Premium</button>
+  </div>
+</div>
+
+<script>
+  // ---- PAGE NAVIGATION ----
+  function goTo(tab) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+    document.getElementById('page-' + tab).classList.add('active');
+    const ti = document.querySelector('[data-tab="' + tab + '"]');
+    if (ti) ti.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // re-run fade-in
+    setTimeout(() => {
+      document.querySelectorAll('#page-' + tab + ' .fade-in:not(.visible)').forEach(el => {
+        observer.observe(el);
+      });
+    }, 50);
+  }
+
+  function goToTab(section) {
+    const map = { features:'features', community:'community', pricing:'pricing', donate:'donate' };
+    goTo(map[section] || 'home');
+  }
+
+  // ---- MODAL ----
+  function openModal(id) {
+    document.getElementById('modal-' + id).classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById('modal-' + id).classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', function(e) {
+      if (e.target === this) { this.classList.remove('active'); document.body.style.overflow = ''; }
+    });
+  });
+
+  // ---- TOAST ----
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3500);
+  }
+
+  // ---- AUTH ----
+  function handleSignup() {
+    const checked = document.getElementById('tos-check').checked;
+    if (!checked) { showToast('Please accept the Terms of Service to continue.'); return; }
+    showToast('Welcome to RESET! 🌱 Check your email.');
+    closeModal('signup');
+  }
+  function handleLogin() {
+    const email = document.getElementById('loginEmail').value;
+    const pw = document.getElementById('loginPw').value;
+    if (!email || !pw) { showToast('Please enter your email and password.'); return; }
+    showToast('Logged in successfully! 👋');
+    closeModal('login');
+  }
+
+  // ---- DONATE ----
+  let selectedAmount = null;
+  function selectDonate(btn, amount) {
+    document.querySelectorAll('.donate-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedAmount = amount;
+    document.getElementById('customDonate').value = '';
+  }
+  function handleDonate() {
+    const custom = document.getElementById('customDonate').value;
+    const amount = custom || selectedAmount;
+    if (!amount) { showToast('Please choose or enter a donation amount.'); return; }
+    showToast('Thank you for donating €' + amount + '! ❤️');
+    const counter = document.getElementById('heartCounter');
+    const num = parseInt(counter.textContent.match(/\d+/)[0]) + 1;
+    counter.textContent = '❤️ ' + num + ' people have donated this month';
+    document.querySelectorAll('.donate-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('customDonate').value = '';
+    selectedAmount = null;
+  }
+
+  // ---- SCROLL FADE ----
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
